@@ -38,7 +38,7 @@ jobs:
 
     # Optional: Save test results (this is useful for reporting)
     - name: Upload Test Results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@latest
       with:
         name: test-results
         path: '**/test-*.xml'  # If your tests produce XML results, adjust this based on your test framework
