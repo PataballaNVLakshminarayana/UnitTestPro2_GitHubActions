@@ -1,4 +1,4 @@
-name: Build and Test .NET Framework Project
+name: Build and Test Classic .NET Framework Project
 
 # Trigger the workflow on pushes or pull requests to the main branch
 on:
@@ -21,9 +21,7 @@ jobs:
     # Step 2: Set up .NET SDK
     - name: Set up NuGet
       uses: NuGet/setup-nuget@v1
-      with:
-        dotnet-version: '8.0.x'  # Specify the .NET SDK version you are using
-
+      
     # Step 3: Install Dependencies (restore the project)
     - name: Restore NuGet packages
       run: nuget restore UnitTestPro2_GitHubActions.sln  # This will restore NuGet packages for your solution
