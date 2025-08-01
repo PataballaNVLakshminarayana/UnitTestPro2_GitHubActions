@@ -25,16 +25,16 @@ jobs:
         dotnet-version: '8.0.x'  # Specify the .NET SDK version you are using
 
     # Step 3: Install Dependencies (restore the project)
-    - name: Restore dependencies
-      run: dotnet restore  # This will restore NuGet packages for your solution
+    - name: Restore NuGet packages
+      run: nuget restore UnitTestPro2_GitHubActions.sln  # This will restore NuGet packages for your solution
 
     # Step 4: Build the project
     - name: Build the project
-      run: dotnet build --configuration Release
+      run: msbuild UnitTestPro2_GitHubActions.sln --configuration Release
 
     # Step 5: Run Selenium Tests
     - name: Run Selenium Tests
-      run: dotnet test --configuration Release
+      run: vstest.console.exe F:\Practice_Final\SeleniumWithC#_GitHub\UnitTestPro2_GitHubActions\UnitTestPro2_GitHubActions\bin\Debug\UnitTestPro2_GitHubActions.dll --configuration Release
 
     # Optional: Save test results (this is useful for reporting)
     - name: Upload Test Results
