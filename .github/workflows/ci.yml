@@ -1,47 +1,38 @@
 name: Build and Test Classic .NET Framework Project
 
-# Trigger the workflow on pushes or pull requests to the main branch
 on:
   push:
     branches:
-      - master  # Or your default branch
+      - master  
   pull_request:
     branches:
       - master
 
 jobs:
   build:
-    runs-on: windows-latest  # Using Windows environment as Selenium requires a browser (Chrome, Edge, etc.)
+    runs-on: windows-latest  
 
     steps:
-    # Step 1: Checkout the repository
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    # Step 2: Set up .NET SDK
     - name: Set up NuGet
       uses: NuGet/setup-nuget@v1
       
-    # Step 3: Install Dependencies (restore the project)
     - name: Restore NuGet packages
-      run: nuget restore UnitTestPro2_GitHubActions.sln  # This will restore NuGet packages for your solution
+      run: nuget restore UnitTestPro2_GitHubActions.sln  
 
-    # Step 4: Build the project
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-
-    # Step 4: Build the project
     - name: Build the project
       run: msbuild UnitTestPro2_GitHubActions.sln /p:Configuration=Release
 
-    # Step 5: Run Selenium Tests
     - name: Run Selenium Tests
       run: vstest.console.exe F:\Practice_Final\SeleniumWithC#_GitHub\UnitTestPro2_GitHubActions\UnitTestPro2_GitHubActions\bin\Debug\UnitTestPro2_GitHubActions.dll --configuration Release
 
-    # Optional: Save test results (this is useful for reporting)
     - name: Upload Test Results
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: '**/test-*.xml'  # If your tests produce XML results, adjust this based on your test framework
+        path: '**/test-*.xml'  
