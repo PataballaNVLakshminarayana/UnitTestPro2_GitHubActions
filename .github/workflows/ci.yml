@@ -1,4 +1,4 @@
-name: Selenium C# Test Workflow
+name: Build and Test .NET Framework Project
 
 # Trigger the workflow on pushes or pull requests to the main branch
 on:
@@ -19,8 +19,8 @@ jobs:
       uses: actions/checkout@v2
 
     # Step 2: Set up .NET SDK
-    - name: Set up .NET Core SDK
-      uses: actions/setup-dotnet@v2
+    - name: Set up NuGet
+      uses: NuGet/setup-nuget@v1
       with:
         dotnet-version: '8.0.x'  # Specify the .NET SDK version you are using
 
@@ -29,8 +29,13 @@ jobs:
       run: nuget restore UnitTestPro2_GitHubActions.sln  # This will restore NuGet packages for your solution
 
     # Step 4: Build the project
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+
+    # Step 4: Build the project
     - name: Build the project
-      run: dotnet build UnitTestPro2_GitHubActions.sln --configuration Release
+      run: msbuild UnitTestPro2_GitHubActions.sln /p:Configuration=Release
 
     # Step 5: Run Selenium Tests
     - name: Run Selenium Tests
